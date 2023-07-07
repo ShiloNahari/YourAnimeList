@@ -1,0 +1,34 @@
+.Footer {
+  text-align: center;
+  color: aliceblue;
+  background-color: rgb(36, 36, 237);
+  min-height: 150px;
+  padding: auto;
+  padding-top: auto;
+}
+.Footer p {
+  font-size: large;
+  padding: 20px;
+  margin: 10px;
+}
+
+.Footer ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: -1px;
+}
+.Footer li {
+  padding: 0 10px;
+  align-items: baseline;
+  font-size: large;
+  border-left: 1px solid #ccc;
+}
+.Footer a {
+  color: white;
+}
+.Footer li:first-child{
+    border-left: none;
+}

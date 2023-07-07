@@ -1,0 +1,14 @@
+.card {
+  border: 1px black solid;
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;
+  flex-basis: calc(25% - 10px); /* Adjust the width as per your needs */
+  margin: 5px;
+  text-align: center;
+}
+
+.card img {
+  width: 150px;
+  margin: auto;
+}

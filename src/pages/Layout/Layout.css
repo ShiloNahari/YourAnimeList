@@ -1,0 +1,33 @@
+li {
+  list-style: none;
+}
+
+ul.nav-buttons {
+  margin-top: 0px;
+}
+
+nav {
+  padding: 1px;
+  
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  display: block;
+  background-color: rgb(55, 117, 171);
+}
+
+.nav-buttons {
+  margin-left: 200px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.nav-buttons li {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+  margin-right: 30px;
+  list-style: none
+}

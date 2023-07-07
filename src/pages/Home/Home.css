@@ -1,0 +1,12 @@
+.anime-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.anime-grid .card {
+  border: 1px black solid;
+}

@@ -1,0 +1,23 @@
+.profile {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  margin: auto;
+}
+
+.profile-info {
+  margin-top: 5px;
+  position: relative;
+  left: 0;
+  border: 2px black solid;
+  width: 30%;
+  min-height: 100vh;
+}
+
+.main-page {
+  margin-top: 5px;
+  width: 70%;
+  min-height: 100vh;
+  border: 2px rgb(162, 17, 17) solid;
+
+}
