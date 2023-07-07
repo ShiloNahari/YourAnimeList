@@ -2,16 +2,15 @@ import http from "./httpService";
 
 const options = {
   method: 'GET',
-  url: 'https://animes5.p.rapidapi.com/',
-  headers: {
-    'X-RapidAPI-Key': 'e1ed178cdfmsh174fa0b9b8b943dp189617jsn968d7df47454',
-    'X-RapidAPI-Host': 'animes5.p.rapidapi.com'
-  }
+  url: process.env.REACT_APP_URL,
+  headers: process.env.REACT_APP_HEADERS
 }
 
 export const getAllAnimes = async () => {
   try {
-    const hi = await http.get('https://animes5.p.rapidapi.com/',options)
+    console.log('hi');
+    const hi = await http.get(process.env.REACT_APP_URL, options)
+    console.log('hi');
     console.log(hi)
     return hi.data.animes
   } catch (err) {

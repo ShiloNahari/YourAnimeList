@@ -27,9 +27,10 @@ export default function Home() {
       <div className="carosella">{/* {carosella bs} */}</div>
 
       <div className="anime-grid">
-        {animes
-          ? animes.map((anime) => <Card cardData={anime} key={anime.id} />)
-          : "loading..."}
+        {animes ? 
+        animes.map((anime) => <Card cardData={anime} key={anime.id} />)
+        : 
+        "loading..."}
       </div>
     </div>
   )
