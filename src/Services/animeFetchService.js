@@ -2,18 +2,24 @@ import http from "./httpService";
 
 const options = {
   method: 'GET',
-  url: process.env.REACT_APP_URL,
-  headers: process.env.REACT_APP_HEADERS
+  params: {
+    page: '1',
+    size: '100',
+  },
+  headers: {
+    "X-RapidAPI-Key": process.env.REACT_APP_X_RapidAPI_Key,
+    "X-RapidAPI-Host": process.env.REACT_APP_X_RapidAPI_Host
+  }
 }
 
 export const getAllAnimes = async () => {
   try {
-    console.log('hi');
     const hi = await http.get(process.env.REACT_APP_URL, options)
-    console.log('hi');
-    console.log(hi)
-    return hi.data.animes
+
+    console.log(hi.headers["x-ratelimit-requests-remaining"])
+    return hi.data.data
   } catch (err) {
+    console.log(err);
     return 'error'
   }
 }
