@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom"
+import cookies from 'js-cookie'
 import http from "../Services/httpService";
 
 export const useLogin = () => {
@@ -20,21 +21,16 @@ export const useLogin = () => {
     };
     const body = JSON.stringify({ email, password, });
 
-   
     try {
       if (Boolean(!email)  || Boolean(!password)) {
         console.log(Boolean(email)  || Boolean(password));
         throw Error('all fields required')         
       }
-      const response = await http.post('http://localhost:5000/api/auth/login', body, options)
-      console.log(response);
       
-      //save the user to local storage
-      console.log(response.data.user);
-      localStorage.setItem('user', JSON.stringify(response.data.user))
-      
+      const response = await http.post('http://localhost:5000/api/auth/signin', body, options)
+                  
       //update the auth context
-      dispatch({type:"LOGIN", payload: response.data.user})
+      dispatch({type:"LOGIN", payload: response.data})
       
       //send data to backend
       setTimeout(() => {

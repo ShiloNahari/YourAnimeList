@@ -18,9 +18,10 @@ export const useSignup = () => {
       headers: {"Content-Type": "application/json"}
     };
     const body = JSON.stringify({username, email, password, check});
-
+    
     try {
       const response = await http.post('http://localhost:5000/api/auth/signup', body, options)
+      console.log('hi');
       console.log(response);
       
       //save the user to local storage
@@ -36,6 +37,7 @@ export const useSignup = () => {
           navigate("/", { replace: false })
         }, 2000)
     } catch (error) {
+      console.log(error);
       if (!!error.response){
         setError(error.response.data.error)
       }else{

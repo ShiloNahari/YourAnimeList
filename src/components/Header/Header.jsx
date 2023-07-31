@@ -8,7 +8,7 @@ export default function Header() {
     <div className="row">
       <header>
         <Link to='/'>
-        <div className="logo">Your Anime List</div>
+        <div className="logo">YourAnimeList</div>
         </Link>
         <LogIn/>
       </header>

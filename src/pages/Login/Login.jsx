@@ -1,10 +1,8 @@
-import { useState, useContext } from "react"
+import { useState } from "react"
 import { useLogin } from '../../hooks/useLogin'
-import { useNavigate } from "react-router-dom"
 
 export default function Register() {
 
-  const navigate = useNavigate()
 
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)

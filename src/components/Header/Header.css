@@ -24,16 +24,9 @@ div.row {
 }
 
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .logo {
   font-size: 26px;
   font-weight: bold;
-  
 }
 
 
@@ -42,12 +35,6 @@ header.buttons {
   align-items: center;
 }
 
-header button:hover {
-    transform: scale(1.05);
-  
-  cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
 
 .login,
 .signup,

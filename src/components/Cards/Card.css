@@ -1,4 +1,4 @@
-.card {
+.anime-grid .card {
   border: 1px black solid;
   display: flex;
   flex-direction: column;
@@ -13,4 +13,5 @@
   width: 150px;
   margin: auto;
   margin-top: 0;
+  aspect-ratio: 2/3;
 }

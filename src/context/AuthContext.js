@@ -1,9 +1,10 @@
 import { createContext, useEffect, useReducer } from "react";
+import jwtDecode from "jwt-decode";
 
 
 export const AuthContext = createContext();
 
-export const authReducer = (state, action) => {
+export const authReducer = (user, action) => {
   switch (action.type) {
     case 'LOGIN':
       return { user: action.payload };
@@ -12,26 +13,26 @@ export const authReducer = (state, action) => {
       return { user: null };
 
     default:
-      return state;
+      return user;
   }
 }
 
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, {
+  const [user, dispatch] = useReducer(authReducer, {
     user: null
   })
   useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem('user'))
+    // const user = JSON.parse(localStorage.getItem('user'))
 
-    if(user){
-      dispatch({type:'LOGIN', payload:user})
-    }
+    // if(user){
+    //   dispatch({type:'LOGIN', payload:user})
+    // }
   },[])
 
-  console.log('AuthContest tate: ', state);
+  console.log('AuthContest user: ', user);
 
   return (
-    <AuthContext.Provider value={{...state, dispatch}}>
+    <AuthContext.Provider value={{...user, dispatch}}>
       { children }
     </AuthContext.Provider>
   )

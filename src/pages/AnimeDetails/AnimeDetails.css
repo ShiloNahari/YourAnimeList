@@ -1,0 +1,46 @@
+.anime-details{
+  display: flex;
+  flex-direction: row;
+}
+
+.side-stuff {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 10px;
+  margin-left: 30px;
+  position: relative;
+  top: 0;
+  left: 0;
+  border: gray 1px ;
+  border-top-style: none;
+  border-right-style: solid;
+  border-bottom-style: none;
+  border-left-style: solid;
+}
+
+hr {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.side-stuff p {
+  margin: 0.5rem;
+}
+
+.link {
+  color: #1c439b;
+}
+.link:hover{
+  text-decoration: underline;
+}
+
+.anime-details-title {
+  background-color: #e1e7f5;
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.seen > input {
+  width: 50px;
+}

@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom"
-import "../Page.css"
-import "./Layout.css"
+import "../../pages/Page.css"
+import "./NavBar.css"
 
 export default function Layout() {
   const links = [
@@ -10,7 +10,7 @@ export default function Layout() {
   ]
   return (
     <>
-      <nav>
+      <nav className="main-nav">
         <ul className="nav-buttons">
           {links.map((button) => (
             <li key={button.innerHTML}>
