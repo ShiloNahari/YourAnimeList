@@ -9,7 +9,7 @@ export const useSignup = () => {
   const [ isLoading, setIsLoading ] = useState(null)
   const { dispatch } = useAuthContext();
 
-  const signup = async (username,email, password,check) => {
+  const signup = async (userName,email, password,check) => {
     setError(null)
     setIsLoading(true)
     const options = {
@@ -17,7 +17,7 @@ export const useSignup = () => {
       mode:"cors",
       headers: {"Content-Type": "application/json"}
     };
-    const body = JSON.stringify({username, email, password, check});
+    const body = JSON.stringify({userName, email, password, check});
     
     try {
       const response = await http.post('http://localhost:5000/api/auth/signup', body, options)
