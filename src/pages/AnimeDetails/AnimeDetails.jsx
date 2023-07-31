@@ -2,7 +2,7 @@ import { useEffect, useState} from "react"
 import { Link, useParams } from "react-router-dom"
 import { getAnimeById } from "../../Services/animeFetchService"
 import { addAnimeToList } from "../../Services/userList"
-import { AuthContext } from '../../context/AuthContext'
+import { useAuthContext } from "../../hooks/useAuthContext"
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs"
 
 import "./AnimeDetails.css"
@@ -12,7 +12,7 @@ export default function AnimeDetails(props) {
   const [status, setStatus] = useState('')
   const [episodesWatched, setEpisodesWatched] = useState(null)
   const [score, setScore] = useState(null)
-  const { user } = AuthContext
+  const { user } = useAuthContext()
 
 
   const { id } = useParams()
@@ -24,8 +24,9 @@ export default function AnimeDetails(props) {
   ];
 
   const handleSubmit = async(e) => {
+    console.log(user);
     e.preventDefault()
-    const data = {score, status, episodesWatched, animeid:anime._id, }
+    const data = {score, status, episodesWatched, animeid:anime._id, id: user.id }
     await addAnimeToList(data)
 
   }

@@ -19,6 +19,7 @@ export default function LogIn() {
   useEffect(() => {
 
     const closeDropDown = (e) => {
+      console.log(dropdownMenuRef);
       if (dropdownMenuRef.current && !dropdownMenuRef.current.contains(e.target)) {
         setOpenProfile(false)
       }
