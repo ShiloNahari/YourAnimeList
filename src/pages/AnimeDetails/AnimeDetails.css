@@ -8,6 +8,7 @@
   flex-direction: column;
   width: 300px;
   padding: 10px;
+  padding-top: 0;
   margin-left: 30px;
   position: relative;
   top: 0;
@@ -43,4 +44,15 @@ hr {
 
 .seen > input {
   width: 50px;
+}
+
+.status-edit {
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-edit div  {
+  justify-content: end;
 }

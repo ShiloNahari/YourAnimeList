@@ -58,6 +58,24 @@ export const getAnimeById = async(id)=>{
   }
 }
 
-export const register = async (username,email, password,check) => {
+export const  fetchAnimeList = async (userId) => {
+  const options = {
+    method: "GET",
+    URL: `${process.env.REACT_APP_SERVER_URL}/api/anime-list?userid=${userId}`
+  }
+}
 
+export const addAnimeToList = async(body) =>{
+  const { userId, animeId, status, episodesSeen, rating } = body
+  console.log(body);
+  const options = {
+    method:"POST",
+    url:'',
+  }
+  try {
+    const addedAnime = await http.post(options.url,body, options)
+
+  } catch (error) {
+    
+  }
 }

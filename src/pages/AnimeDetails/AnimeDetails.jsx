@@ -1,7 +1,7 @@
 import { useEffect, useState} from "react"
 import { Link, useParams } from "react-router-dom"
 import { getAnimeById } from "../../Services/animeFetchService"
-import { addAnimeToList } from "../../Services/userList"
+import { addAnimeToList } from "../../Services/animeFetchService"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs"
 
@@ -9,9 +9,9 @@ import "./AnimeDetails.css"
 
 export default function AnimeDetails(props) {
   const [anime, setAnime] = useState({})
-  const [status, setStatus] = useState('')
-  const [episodesWatched, setEpisodesWatched] = useState(null)
-  const [score, setScore] = useState(null)
+  const [status, setStatus] = useState(1)
+  const [episodesWatched, setEpisodesWatched] = useState(0)
+  const [rating, setRating] = useState(0)
   const { user } = useAuthContext()
 
 
@@ -24,9 +24,20 @@ export default function AnimeDetails(props) {
   ];
 
   const handleSubmit = async(e) => {
-    console.log(user);
     e.preventDefault()
-    const data = {score, status, episodesWatched, animeid:anime._id, id: user.id }
+    const data = {
+      userId: user.id,
+      animeId: anime._id,
+      status,
+      episodesSeen:episodesWatched,
+      rating,
+    }
+    if (status > 5){
+      setStatus(1)
+    }
+    if (episodesWatched>anime.episodes){
+      setEpisodesWatched(anime.episodes)
+    }
     await addAnimeToList(data)
 
   }
@@ -37,12 +48,7 @@ export default function AnimeDetails(props) {
       setAnime(data)
     }
     fetchAnimeById()
-  }, [])
-
-  useEffect(() => {
-    console.log(anime)
-  }, [anime])
-
+  }, [id])
   
 
 
@@ -73,8 +79,8 @@ export default function AnimeDetails(props) {
                 </div>
 
                 <div>
-                  <label htmlFor="score">Your Score</label>
-                  <select name="score" id="score" onChange={e=>setScore(e.target.value)}>
+                  <label htmlFor="rating">Your rating</label>
+                  <select name="score" id="rating" onChange={e=>setRating(e.target.value)}>
                     <option defaultValue={0} value={0}>Select</option>
                     <option value={10} >(10) Masterpiece</option>
                     <option value={9} >(9) Great</option>
@@ -98,7 +104,7 @@ export default function AnimeDetails(props) {
             <p>
               <strong>alernative names:</strong>
               {anime.alternativeTitles?.map((item, index) => {
-                if (index === anime.alternativeTitles.length - 1) {
+                if (index === (anime.alternativeTitles.length - 1)) {
                   return item
                 }
                 return item + ", "

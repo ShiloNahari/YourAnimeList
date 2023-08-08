@@ -22,6 +22,7 @@ export const useLogin = () => {
     const body = JSON.stringify({ email, password, });
 
     try {
+      
       if (Boolean(!email)  || Boolean(!password)) {
         console.log(Boolean(email)  || Boolean(password));
         throw Error('all fields required')         
@@ -32,12 +33,9 @@ export const useLogin = () => {
       //update the auth context
       dispatch({type:"LOGIN", payload: response.data})
       
-      //send data to backend
-      setTimeout(() => {
-        // 👇 Redirects to login page
-        navigate("/", { replace: false })
-        setIsLoading(false)
-      }, 2000)
+      // 👇 Redirects to login page
+      navigate("/", { replace: false })
+      setIsLoading(false)
     } catch (error) {
       console.log(error);
       if (!!error.response){

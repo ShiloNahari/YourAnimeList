@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 
 
 export const AuthContext = createContext();
@@ -19,17 +20,20 @@ export const authReducer = (user, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [user, dispatch] = useReducer(authReducer, {
-    user: null
+    user: Cookies.get('token') || null
   })
   useEffect(()=>{
-    // const user = JSON.parse(localStorage.getItem('user'))
-
-    // if(user){
-    //   dispatch({type:'LOGIN', payload:user})
-    // }
+    const loadUserDataFromCookie = async() => {
+      const tokenCookie = Cookies.get('token');
+      if (tokenCookie){
+        dispatch({type:"LOGIN", payload: await jwtDecode(tokenCookie)})
+      } else {
+        dispatch({type:"LOGOUT", payload:null})
+      }
+    }
+    loadUserDataFromCookie()
   },[])
 
-  console.log('AuthContest user: ', user);
 
   return (
     <AuthContext.Provider value={{...user, dispatch}}>
