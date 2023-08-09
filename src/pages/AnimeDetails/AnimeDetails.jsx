@@ -12,7 +12,10 @@ export default function AnimeDetails(props) {
   const [status, setStatus] = useState(1)
   const [episodesWatched, setEpisodesWatched] = useState(0)
   const [rating, setRating] = useState(0)
+  const [error, setError] = useState(null)
+  const [response, setResponse] = useState(null)
   const { user } = useAuthContext()
+
 
 
   const { id } = useParams()
@@ -25,26 +28,48 @@ export default function AnimeDetails(props) {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    const data = {
-      userId: user.id,
-      animeId: anime._id,
-      status,
-      episodesSeen:episodesWatched,
-      rating,
+    if (!user) {
+      return setError('please log in')
     }
-    if (status > 5){
-      setStatus(1)
+    try {
+      const data = {
+        title: anime.title,
+        thumb: anime.thumb,
+        type: anime.type,
+        userId: user.id,
+        animeId: anime._id,
+        status,
+        episodesSeen:episodesWatched,
+        rating,
+      }
+      console.log(data);
+  
+      if (status > 5){
+        setStatus(1)
+      }
+      if (episodesWatched>anime.episodes){
+        setEpisodesWatched(anime.episodes)
+      }
+      const respose = await addAnimeToList(data)
+      setResponse(respose)
+    } catch (error) {
+      console.log(error);
+      setError(error)
     }
-    if (episodesWatched>anime.episodes){
-      setEpisodesWatched(anime.episodes)
-    }
-    await addAnimeToList(data)
 
+    
   }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError(null)
+      setResponse(null)
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [error,response]);
+
   useEffect(() => {    
     const fetchAnimeById = async () => {
       const data = await getAnimeById(id)
-      console.log(data)
       setAnime(data)
     }
     fetchAnimeById()
@@ -97,7 +122,8 @@ export default function AnimeDetails(props) {
 
               <button type="submit">Add</button>
             </form>
-
+            <div className="error">{error}</div>
+            <div className="response">{response}</div>
             </div>
 
 

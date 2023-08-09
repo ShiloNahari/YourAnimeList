@@ -1,22 +1,15 @@
-import { useEffect } from 'react'
-import { useAuthContext } from '../../hooks/useAuthContext'
-import { fetchAnimeList } from './../../Services/animeFetchService'
+import CardList from '../CardList/CardList'
 import './AnimeList.css'
 
 export default function AnimeList (props) {
-  const { user } = useAuthContext()
+  const { animeList } = props
 
-  useEffect(()=>{
-    const pullAnimesFromDB = async () => {
-      const animeList = await fetchAnimeList(user.id)
-
-
-    }
-    pullAnimesFromDB()
-  })
   return (
     <div className='AnimeList '>
-      
+      <h2>your list</h2>
+      {animeList && animeList.map((anime) => (
+        <CardList anime={anime}/>
+      ))}
     </div>
   )
 }
