@@ -21,7 +21,7 @@ export default function Main() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/" index element={<Home />} />
-            <Route path="/anime/:id" element={<AnimeDetails />} />
+            <Route path="/anime/:animeId" element={<AnimeDetails />} />
 
             <Route path="/profile/:id/"element={<Profile />}>
               <Route path="settings" element={<Settings />} />

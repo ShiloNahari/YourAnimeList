@@ -13,8 +13,8 @@ export default function Profile() {
   const { user } = useAuthContext()
   useEffect(()=>{
     const fetchYourList = async() =>{
-      const yourlist = await fetchAnimeList(id)
-      setAnimeList(yourlist)
+      const yourList = await fetchAnimeList(id)
+      setAnimeList(yourList)
     }
     fetchYourList()
   },[id])

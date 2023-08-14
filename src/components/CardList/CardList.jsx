@@ -6,9 +6,9 @@ export default function CardList ({anime}) {
     console.log(anime);
   })
   return (
-    <div className="cardList">
+    <div className="card">
+      <img src={anime.thumb} alt={anime.title} />
       {anime.animeId}
-      {anime.thumb}
 
     </div>
   )

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom"
-import cookies from 'js-cookie'
 import http from "../Services/httpService";
 
 export const useLogin = () => {

@@ -1,6 +1,10 @@
-import { useEffect, useState} from "react"
+import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { getAnimeById } from "../../Services/animeFetchService"
+import {
+  deleteAnimeFromList,
+  getAnimeById,
+  updateAnimeInList,
+} from "../../Services/animeFetchService"
 import { addAnimeToList } from "../../Services/animeFetchService"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs"
@@ -10,72 +14,124 @@ import "./AnimeDetails.css"
 export default function AnimeDetails(props) {
   const [anime, setAnime] = useState({})
   const [status, setStatus] = useState(1)
-  const [episodesWatched, setEpisodesWatched] = useState(0)
+  const [episodesSeen, setEpisodesSeen] = useState(0)
   const [rating, setRating] = useState(0)
+  const [breadCrumbs, setBreadCrumbs] = useState([])
   const [error, setError] = useState(null)
   const [response, setResponse] = useState(null)
   const { user } = useAuthContext()
 
+  const { animeId } = useParams()
 
-
-  const { id } = useParams()
   
-  let breadcrumbItems = [
-    { label: 'Top', link: '/' },
-    { label: 'Subcategory', link: `/anime/${anime.type}` }, /* TODO make /ova | /ona | etc, filtered by status */
-    { label: `${anime.title}`, link: `/anime/${anime._id}` },
-  ];
 
-  const handleSubmit = async(e) => {
+  const handleEditStatus = async (e) => {
     e.preventDefault()
-    if (!user) {
-      return setError('please log in')
+
+    if (!user) return setError("please log in")
+
+    const data = {
+      userId: user.id,
+      animeId: anime._id,
+      status,
+      episodesSeen: episodesSeen,
+      rating,
     }
+
     try {
-      const data = {
-        title: anime.title,
-        thumb: anime.thumb,
-        type: anime.type,
-        userId: user.id,
-        animeId: anime._id,
-        status,
-        episodesSeen:episodesWatched,
-        rating,
-      }
-      console.log(data);
-  
-      if (status > 5){
-        setStatus(1)
-      }
-      if (episodesWatched>anime.episodes){
-        setEpisodesWatched(anime.episodes)
-      }
-      const respose = await addAnimeToList(data)
+
+      if (status > 5) setStatus(5)
+
+      if (episodesSeen > anime.episodes) setEpisodesSeen(anime.episodes)
+
+      const respose = await updateAnimeInList(data)
+
       setResponse(respose)
     } catch (error) {
-      console.log(error);
+      console.log(error)
       setError(error)
     }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!user) {
+      return setError("please log in")
+    }
+    console.log(anime);
+    const data = {
+      title: anime.title,
+      thumb: anime.thumb,
+      type: anime.type,
+      userId: user.id,
+      animeId: anime._id,
+      status,
+      episodesSeen: episodesSeen,
+      rating,
+    }
+
+    try {
+      if (status > 5) setStatus(5)
+
+      if (episodesSeen > anime.episodes) {
+        setEpisodesSeen(anime.episodes)
+      }
+
+      const respose = await addAnimeToList(data)
+      console.log(respose);
+      setResponse(respose)
+    } catch (error) {
+      console.log(error)
+      setError(error)
+    }
+  }
+
+  const handleDeleteButton = async(e) => {
+    e.preventDefault()
+
+    if (!user) return setError("please log in")
 
     
+    try {
+
+      if (status > 5) setStatus(5)
+
+      if (episodesSeen > anime.episodes) setEpisodesSeen(anime.episodes)
+
+      const respose = await deleteAnimeFromList(anime._id)
+
+      setResponse(respose)
+    } catch (error) {
+      console.log(error)
+      setError(error)
+    }
   }
   useEffect(() => {
     const timer = setTimeout(() => {
       setError(null)
       setResponse(null)
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [error,response]);
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [error, response])
 
-  useEffect(() => {    
+  useEffect(() => {
     const fetchAnimeById = async () => {
-      const data = await getAnimeById(id)
+      const data = await getAnimeById(animeId)
       setAnime(data)
     }
     fetchAnimeById()
-  }, [id])
-  
+  }, [animeId])
 
+  useEffect(()=>{
+    setBreadCrumbs([
+      { label: "Top", link: "/" },
+      {
+        label: "Subcategory",
+        link: `/anime/${anime.type}`,
+      } /* TODO make /ova | /ona | etc, filtered by status */,
+      { label: `${anime.title}`, link: `/anime/${anime._id}` },
+    ])
+  },[anime])
 
   return (
     <div className="AnimeDetails page">
@@ -83,88 +139,127 @@ export default function AnimeDetails(props) {
       {anime && anime ? (
         <div className="anime-details">
           <div className="side-stuff">
-          <img src={anime.image} alt={anime.title + 'poster'} />
+            <img src={anime.image} alt={anime.title + "poster"} />
 
-            <div className="status-edit"> 
-              <form onSubmit={(e)=>handleSubmit(e)}>
+            <div className="status-edit">
+              <form>
                 <div>
-                  <label htmlFor="status">status </label> 
-                  <select name="status" id="status" onChange={(e)=>{setStatus(e.target.value)}}>
-                    <option value={1} >watching</option>
-                    <option value={2} >completed</option>
-                    <option value={3} >on hold</option>
-                    <option value={4} >plan to watch</option>
-                    <option value={5} >dropped</option>
+                  <label htmlFor="status">status </label>
+                  <select
+                    name="status"
+                    id="status"
+                    onChange={(e) => {
+                      setStatus(e.target.value)
+                    }}
+                  >
+                    <option value={1}>watching</option>
+                    <option value={2}>completed</option>
+                    <option value={3}>on hold</option>
+                    <option value={4}>plan to watch</option>
+                    <option value={5}>dropped</option>
                   </select>
                 </div>
-              
+
                 <div className="seen">
                   <label htmlFor="rating">episodes seen </label>
-                  <input type="number" onChange={(e)=>setEpisodesWatched(e.target.value)}/><span> / {anime.episodes}</span>
+                  <input
+                    type="number"
+                    onChange={(e) => setEpisodesSeen(e.target.value)}
+                  />
+                  <span> / {anime.episodes}</span>
                 </div>
 
                 <div>
                   <label htmlFor="rating">Your rating</label>
-                  <select name="score" id="rating" onChange={e=>setRating(e.target.value)}>
-                    <option defaultValue={0} value={0}>Select</option>
-                    <option value={10} >(10) Masterpiece</option>
-                    <option value={9} >(9) Great</option>
-                    <option value={8} >(8) Very Good</option>
-                    <option value={7} >(7) Good</option>
-                    <option value={6} >(6) Fine</option>
-                    <option value={5} >(5) Average</option>
-                    <option value={4} >(4) Bad</option>
-                    <option value={3} >(3) Very Bad</option>
-                    <option value={2} >(2) Horrible</option>
-                    <option value={1} >(1) Appalling</option>
+                  <select
+                    name="score"
+                    id="rating"
+                    onChange={(e) => setRating(e.target.value)}
+                  >
+                    <option defaultValue={0} value={0}>
+                      Select
+                    </option>
+                    <option value={10}>(10) Masterpiece</option>
+                    <option value={9}>(9) Great</option>
+                    <option value={8}>(8) Very Good</option>
+                    <option value={7}>(7) Good</option>
+                    <option value={6}>(6) Fine</option>
+                    <option value={5}>(5) Average</option>
+                    <option value={4}>(4) Bad</option>
+                    <option value={3}>(3) Very Bad</option>
+                    <option value={2}>(2) Horrible</option>
+                    <option value={1}>(1) Appalling</option>
                   </select>
                 </div>
 
-              <button type="submit">Add</button>
-            </form>
-            <div className="error">{error}</div>
-            <div className="response">{response}</div>
+                <button
+                  className="addBtn"
+                  onClick={(e) => handleSubmit(e)}
+                  type="submit"
+                >
+                  Add
+                </button>
+                <button
+                  className="updateBtn"
+                  onClick={(e) => handleEditStatus(e)}
+                  type="submit"
+                >
+                  update
+                </button>
+                <button
+                  className="deleteBtn"
+                  onClick={(e) => handleDeleteButton(e)}
+                  type="submit"
+                >
+                  delete
+                </button>
+              </form>
+              <div className="error">{error}</div>
+              <div className="response">{response}</div>
             </div>
-
 
             <p>
               <strong>alernative names:</strong>
               {anime.alternativeTitles?.map((item, index) => {
-                if (index === (anime.alternativeTitles.length - 1)) {
+                if (index === anime.alternativeTitles.length - 1) {
                   return item
                 }
                 return item + ", "
               })}
             </p>
-            
-              <p> <strong>information</strong></p>
-              <hr />
-              <p>
+
+            <p>
+              {" "}
+              <strong>information</strong>
+            </p>
+            <hr />
+            <p>
               <strong>type:</strong> {anime.type}
-              </p>
-              <p>
+            </p>
+            <p>
               <strong>status:</strong> {anime.status}
-              </p>
-              <p><strong>ranking:</strong> #{anime.ranking}</p>
-              <p><strong>status:</strong> {anime.status}</p>
-              <p><strong>episodes:</strong> {anime.episodes}</p>
-              <Link to={anime.link} target="_blank">
-                <p className="link">
-                MAL link
-                </p>
-              </Link>
-            
-            
+            </p>
+            <p>
+              <strong>ranking:</strong> #{anime.ranking}
+            </p>
+            <p>
+              <strong>status:</strong> {anime.status}
+            </p>
+            <p>
+              <strong>episodes:</strong> {anime.episodes}
+            </p>
+            <Link to={anime.link} target="_blank">
+              <p className="link">MAL link</p>
+            </Link>
           </div>
 
-          {/* <div className="anime-main-page">
-              <Breadcrumbs items={breadcrumbItems} />
-          </div> */}
-
+          <div className="anime-main-page">
+              <Breadcrumbs items={breadCrumbs} />
+          </div>
         </div>
       ) : (
         "loading..."
-        )}
+      )}
     </div>
   )
 }

@@ -34,9 +34,8 @@ export const getAllAnimes = async () => {
     const allAnimes = await http.get(process.env.REACT_APP_API_URL, options)
     console.log(allAnimes.headers["x-ratelimit-requests-remaining"])
     return allAnimes.data.data
-  } catch (err) {
-    console.error(err);
-    return 'error'
+  } catch (error) {
+    return error
   }
 }
 
@@ -53,34 +52,58 @@ export const getAnimeById = async(id)=>{
     const anime = await http.get(options.url, options )
     return(anime.data);
   } catch (error) {
-    console.log(error);
-    return 'error'
+    return error
   }
 }
 
 export const  fetchAnimeList = async (userId) => {
   const options = {
     method: "GET",
-    URL: `${process.env.REACT_APP_SERVER_URL}/api/anime-list?userid=${userId}`
+    URL: `/api/anime-list?userid=${userId}`
   }
   try {
     const yourList = await http.get(options.URL, options)
     return yourList.data.data
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 
 export const addAnimeToList = async(body) =>{
   const options = {
     method:"POST",
-    url:`${process.env.REACT_APP_SERVER_URL}/api/anime-list`,
+    url:`/api/anime-list`,
   }
   try {
     const addedAnime = await http.post(options.url, body, options)
     return addedAnime.statusText
   } catch (error) {
-    console.log(error.response.data.error);
+    return error.response.data.error
+  }
+}
+
+export const updateAnimeInList = async(body) =>{
+  const options = {
+    method:"PUT",
+    url:`/api/anime-list/${body.animeId}`,
+  }
+  try {
+    const updatedAnime = await http.put(options.url, body, options)
+    return updatedAnime.statusText
+  } catch (error) {
+    return error.response.data.error
+  }
+}
+
+export const deleteAnimeFromList = async(animeId) =>{
+  const options = {
+    method:"DELETE",
+    url:`/api/anime-list/${animeId}`,
+  }
+  try {
+    const deletedAnime = await http.delete(options.url)
+    return deletedAnime.statusText
+  } catch (error) {
     return error.response.data.error
   }
 }

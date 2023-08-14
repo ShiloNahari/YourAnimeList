@@ -7,10 +7,9 @@ import "./Home.css"
 
 export default function Home() {
   
-  const [anime, setAnime] = useState(null)
   const [animes, setAnimes] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(24)
+  const [postsPerPage] = useState(24)
 
   useEffect(() => {
     const fetchedData = async () => {
@@ -21,7 +20,6 @@ export default function Home() {
       }
     }
     fetchedData()
-    setAnime(null)
   }, [])
 
   const lastIndex = currentPage * postsPerPage

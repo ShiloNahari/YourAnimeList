@@ -7,9 +7,12 @@ export default function AnimeList (props) {
   return (
     <div className='AnimeList '>
       <h2>your list</h2>
-      {animeList && animeList.map((anime) => (
-        <CardList anime={anime}/>
-      ))}
+      {animeList 
+      ?animeList.map((anime) => (
+        <CardList anime={anime} key={anime._id}/>
+      ))
+      :'your anime list is empty! D:'
+    }
     </div>
   )
 }
