@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
-import { useNavigate } from "react-router-dom"
 import http from "../Services/httpService";
 
 export const useSignup = () => {
-  const navigate = useNavigate()
   const [ error, setError ] = useState(null)
   const [ isLoading, setIsLoading ] = useState(null)
   const { dispatch } = useAuthContext();
@@ -20,7 +18,7 @@ export const useSignup = () => {
     const body = JSON.stringify({userName, email, password, check});
     
     try {
-      const response = await http.post('http://localhost:5000/api/auth/signup', body, options)
+      const response = await http.post('/api/auth/signup', body, options)
       console.log('hi');
       console.log(response);
       
@@ -29,13 +27,7 @@ export const useSignup = () => {
       
       //update the auth context
       dispatch({type:"LOGIN", payload: response.user})
-      
-      //send data to backend
-      setTimeout(() => {
-        setIsLoading(false)
-        // 👇 Redirects to login page
-          navigate("/", { replace: false })
-        }, 2000)
+
     } catch (error) {
       console.log(error);
       if (!!error.response){

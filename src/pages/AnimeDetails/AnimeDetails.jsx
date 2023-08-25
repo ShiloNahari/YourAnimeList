@@ -10,6 +10,8 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs"
 
 import "./AnimeDetails.css"
+import { getAllComments, postComment } from "../../Services/fetchComments"
+import AnimeComments from "./animeComments/AnimeComments"
 
 export default function AnimeDetails(props) {
   const [anime, setAnime] = useState({})
@@ -20,8 +22,9 @@ export default function AnimeDetails(props) {
   const [error, setError] = useState(null)
   const [response, setResponse] = useState(null)
   const { user } = useAuthContext()
-
   const { animeId } = useParams()
+  const [comment, setComment] = useState('')
+  const [comments, setComments] = useState([])
 
   
 
@@ -106,6 +109,20 @@ export default function AnimeDetails(props) {
       setError(error)
     }
   }
+
+  const handleComment = async() =>{
+    const response =await postComment({user, animeId, comment})
+  }
+
+  useEffect(()=>{
+    const fetchComments = async()=>{
+      const comments = await getAllComments()
+      console.log(comments);
+      setComments(comments)
+    }
+    fetchComments()
+  },[])
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setError(null)
@@ -255,6 +272,27 @@ export default function AnimeDetails(props) {
 
           <div className="anime-main-page">
               <Breadcrumbs items={breadCrumbs} />
+
+              <h2>Details</h2>
+              <div className="details">{anime.synopsis}</div>
+
+              <div className="comment-section">
+                <div className="new-comment">
+                {user && <img src={user.profilePicture} alt="user profile"/>}
+                <input className="comment-input" value={comment} onChange={e=>setComment(e.target.value)} type="text" placeholder="Add a comment..." dir="auto"/>
+                <button type="button" onClick={handleComment}>Comment</button>
+                <button type="button" onClick={()=>setComment('')}>Cancel </button>
+                </div>
+
+                <div className="user-comments">
+                  {!Array.isArray(comments) && comments
+                  ?comments
+                  :comments.map((comment)=>(
+                    <AnimeComments {...comment}/>
+                  ))}
+                </div>
+              </div>
+
           </div>
         </div>
       ) : (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
-import { useNavigate } from "react-router-dom"
 import http from "../Services/httpService";
+import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const navigate = useNavigate()
@@ -27,13 +27,12 @@ export const useLogin = () => {
         throw Error('all fields required')         
       }
       
-      const response = await http.post('http://localhost:5000/api/auth/signin', body, options)
+      const response = await http.post('/api/auth/signin', body, options)
                   
       //update the auth context
       dispatch({type:"LOGIN", payload: response.data})
-      
-      // 👇 Redirects to login page
-      navigate("/", { replace: false })
+      alert('logged in successfully')
+      navigate('/')
       setIsLoading(false)
     } catch (error) {
       console.log(error);

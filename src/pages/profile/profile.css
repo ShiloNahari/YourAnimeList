@@ -6,18 +6,34 @@
 }
 
 .profile-info {
+  min-width: 300px;
+  max-width: 400px;
+  padding: auto;
   margin-top: 5px;
   position: relative;
   left: 0;
   border: 2px black solid;
   width: 30%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-page {
+
   margin-top: 5px;
   width: 70%;
   min-height: 100vh;
+  min-width: 750px;
   border: 2px rgb(162, 17, 17) solid;
+}
 
+.profile-info img {
+  margin: 0 auto;
+  width: 250px;
+  border-radius: 3000px;
+}
+
+.anime-list {
+  min-width: 750px
 }

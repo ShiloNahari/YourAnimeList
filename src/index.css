@@ -1,6 +1,6 @@
 *{ box-sizing: border-box; }
 
-h1{
+h1, h2, p{
   text-align: center;
 }
 
@@ -45,5 +45,6 @@ input, select {
   background-color: rgb(58, 217, 132);
   text-align: center;
 }
+
 
 

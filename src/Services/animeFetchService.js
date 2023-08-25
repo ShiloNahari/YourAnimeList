@@ -57,6 +57,7 @@ export const getAnimeById = async(id)=>{
 }
 
 export const  fetchAnimeList = async (userId) => {
+  if (userId === undefined) return;
   const options = {
     method: "GET",
     URL: `/api/anime-list?userid=${userId}`
@@ -105,5 +106,32 @@ export const deleteAnimeFromList = async(animeId) =>{
     return deletedAnime.statusText
   } catch (error) {
     return error.response.data.error
+  }
+}
+
+export const getAnimeByName = async(data) => {
+  const options =  {
+    method: 'GET',
+    url: 'https://anime-db.p.rapidapi.com/anime',
+    headers: {
+      "X-RapidAPI-Key": process.env.REACT_APP_X_RapidAPI_Key,
+      "X-RapidAPI-Host": process.env.REACT_APP_X_RapidAPI_Host
+    },
+    params: {
+      page: '1',
+      size: '10',
+      search: data,
+      sortBy: 'ranking',
+      sortOrder: 'asc',
+    },
+  }
+
+  try {
+    const response = await http.get(options.url,options);
+    console.log(response);
+    return response.data.data
+
+  } catch (error) {
+    console.error(error);
   }
 }

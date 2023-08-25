@@ -1,1 +1,19 @@
-.card
+.card-list {
+  margin: 5px auto;
+  background-color: #77aeed;
+  min-width: 500px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+}
+
+.card2{
+  display: flex;
+  flex-direction: row;
+}
+
+.card-list-imgs{
+  padding-right: 30px;
+}
+

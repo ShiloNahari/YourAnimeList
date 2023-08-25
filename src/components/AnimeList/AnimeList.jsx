@@ -1,18 +1,15 @@
-import CardList from '../CardList/CardList'
-import './AnimeList.css'
+import CardList from "../CardList/CardList"
+import "./AnimeList.css"
 
-export default function AnimeList (props) {
+export default function AnimeList(props) {
   const { animeList } = props
-
+  
   return (
-    <div className='AnimeList '>
+    <div className="anime-list ">
       <h2>your list</h2>
-      {animeList 
-      ?animeList.map((anime) => (
-        <CardList anime={anime} key={anime._id}/>
-      ))
-      :'your anime list is empty! D:'
-    }
+      {Array.isArray(animeList)
+        ? animeList.map((anime) => <CardList anime={anime} key={anime._id} />)
+        : "your anime list is empty! D:"}
     </div>
   )
 }

@@ -1,6 +1,8 @@
 .anime-details{
   display: flex;
   flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .side-stuff {
@@ -9,6 +11,7 @@
   width: 300px;
   padding: 10px;
   padding-top: 0;
+  margin: 10px auto;
   margin-left: 30px;
   position: relative;
   top: 0;
@@ -27,6 +30,7 @@ hr {
 
 .side-stuff p {
   margin: 0.5rem;
+  
 }
 
 .link {
@@ -56,3 +60,27 @@ hr {
 .status-edit div  {
   justify-content: end;
 }
+
+.anime-main-page {
+  width: 1000px;
+  margin: 5px auto;
+}
+
+.comment-section {
+  margin-top: 300px;
+}
+
+.new-comment {
+  width: 100%;
+}
+.comment-input{
+  width: 60%;
+}
+
+.new-comment img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
+
+

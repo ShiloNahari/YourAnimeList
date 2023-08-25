@@ -1,3 +1,5 @@
-.AnimeList {
-  text-align: center;
+.anime-list{
+  display: flex;
+  flex-direction: column;
+  
 }

@@ -20,15 +20,20 @@ export const authReducer = (user, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [user, dispatch] = useReducer(authReducer, {
-    user: Cookies.get('token') || null
+    user: null
   })
   useEffect(()=>{
     const loadUserDataFromCookie = async() => {
-      const tokenCookie = Cookies.get('token');
+      try {
+        const tokenCookie = Cookies.get('token');
       if (tokenCookie){
         dispatch({type:"LOGIN", payload: await jwtDecode(tokenCookie)})
       } else {
         dispatch({type:"LOGOUT", payload:null})
+      }
+      console.log(await jwtDecode(tokenCookie));
+      } catch (error) {
+        console.log(error);
       }
     }
     loadUserDataFromCookie()

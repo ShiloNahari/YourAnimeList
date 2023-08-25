@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useSignup } from "../../hooks/useSignup"
 
 import "./Register.css"

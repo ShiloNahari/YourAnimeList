@@ -1,0 +1,24 @@
+.comment img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  margin: 30px;
+}
+
+.user-name{
+  padding: 10px;
+  font-weight: 700;
+}
+
+.user-name .faded{
+  color: #a0a0a0;
+}
+
+.comment-body {
+  padding: 10px;
+}

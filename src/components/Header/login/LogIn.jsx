@@ -10,7 +10,7 @@ export default function LogIn() {
   const { user } = useAuthContext()
   const [openProfile, setOpenProfile] = useState(false)
   const dropdownMenuRef = useRef()
-  const handleClick = () => {
+  const handleLogout = () => {
     logout()
   }
 
@@ -35,6 +35,7 @@ export default function LogIn() {
     <>
       <div className="buttons">
         {user && user ? (
+          
           <div className="dropdown-container" 
           ref={dropdownMenuRef}
           onClick={()=>setOpenProfile(prev => !prev)}> 
@@ -48,17 +49,34 @@ export default function LogIn() {
 >
               {user.userName}
             </span>
-            {openProfile && (
+            {openProfile &&  user.role === "user" && (
               <ul className="dropdown-menu" >
                 <Link to={"/profile/" + user.id}>
                   <li >profile</li>
                 </Link>
 
-                <Link to="/anime-list">
+                <Link to={"/anime-list/"+ user.id}>
                   <li >anime list</li>
                 </Link>
                 <Link to="/">
-                  <li onClick={handleClick}>LOGOUT</li>
+                  <li onClick={handleLogout}>LOGOUT</li>
+                </Link>
+              </ul>
+            )}
+            {openProfile &&  user.role === "admin" && (
+              <ul className="dropdown-menu">
+                <Link to={"/admin-panel"}>
+                  <li>admin panel</li>
+                </Link>
+                <Link to={"/profile/" + user.id}>
+                  <li>profile</li>
+                </Link>
+
+                <Link to={"/anime-list/"+ user.id}>
+                  <li>anime list</li>
+                </Link>
+                <Link to="/">
+                  <li onClick={handleLogout}>LOGOUT</li>
                 </Link>
               </ul>
             )}
