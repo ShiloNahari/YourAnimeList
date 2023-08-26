@@ -128,7 +128,6 @@ export const getAnimeByName = async(data) => {
 
   try {
     const response = await http.get(options.url,options);
-    console.log(response);
     return response.data.data
 
   } catch (error) {

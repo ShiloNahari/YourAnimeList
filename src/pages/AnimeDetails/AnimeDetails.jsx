@@ -61,7 +61,6 @@ export default function AnimeDetails(props) {
     if (!user) {
       return setError("please log in")
     }
-    console.log(anime);
     const data = {
       title: anime.title,
       thumb: anime.thumb,

@@ -10,7 +10,6 @@ const pagination = (props) => {
   }
   function setPage (page){
     setCurrentPage(page)
-    console.log(page)
   }
   return (
     <div className="pagination">

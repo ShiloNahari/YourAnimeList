@@ -14,7 +14,6 @@ export default function Home() {
   useEffect(() => {
     const fetchedData = async () => {
       const data = await getAllAnimes()
-      console.log(data)
       if (data) {
         setAnimes(data)
       }

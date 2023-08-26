@@ -23,7 +23,6 @@ export const useLogin = () => {
     try {
       
       if (Boolean(!email)  || Boolean(!password)) {
-        console.log(Boolean(email)  || Boolean(password));
         throw Error('all fields required')         
       }
       

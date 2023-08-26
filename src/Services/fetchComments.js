@@ -12,7 +12,5 @@ export const getCommentsByAnimeId = async(animeId) => {
 }
 
 export const postComment = async(data) => {
-  const response = await http.post('/anime/comments', data)
-  console.log(response);
-
+  await http.post('/anime/comments', data)
 }

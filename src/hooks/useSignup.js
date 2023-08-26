@@ -19,8 +19,6 @@ export const useSignup = () => {
     
     try {
       const response = await http.post('/api/auth/signup', body, options)
-      console.log('hi');
-      console.log(response);
       
       //save the user to local storage
       localStorage.setItem('user', JSON.stringify(response.data.user))
