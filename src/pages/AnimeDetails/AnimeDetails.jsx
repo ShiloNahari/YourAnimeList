@@ -10,7 +10,7 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs"
 
 import "./AnimeDetails.css"
-import { getAllComments, postComment } from "../../Services/fetchComments"
+import { getCommentsByAnimeId, postComment } from "../../Services/fetchComments"
 import AnimeComments from "./animeComments/AnimeComments"
 
 export default function AnimeDetails(props) {
@@ -96,32 +96,30 @@ export default function AnimeDetails(props) {
 
     
     try {
-
-      if (status > 5) setStatus(5)
-
-      if (episodesSeen > anime.episodes) setEpisodesSeen(anime.episodes)
-
       const respose = await deleteAnimeFromList(anime._id)
-
       setResponse(respose)
     } catch (error) {
-      console.log(error)
       setError(error)
     }
   }
 
   const handleComment = async() =>{
-    const response =await postComment({user, animeId, comment})
+    try {
+      if (user.role === null) return 
+      await postComment({user, animeId, comment})
+      setComment('')
+    } catch (error) {
+      alert('log in to comment!')
+    }
   }
 
   useEffect(()=>{
     const fetchComments = async()=>{
-      const comments = await getAllComments()
-      console.log(comments);
+      const comments = await getCommentsByAnimeId(animeId)
       setComments(comments)
     }
     fetchComments()
-  },[])
+  },[animeId])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -153,7 +151,7 @@ export default function AnimeDetails(props) {
   return (
     <div className="AnimeDetails page">
       <h1 className="anime-details-title">{anime.title}</h1>
-      {anime && anime ? (
+      {!Array.isArray(anime) && anime ? (
         <div className="anime-details">
           <div className="side-stuff">
             <img src={anime.image} alt={anime.title + "poster"} />
@@ -285,10 +283,10 @@ export default function AnimeDetails(props) {
                 </div>
 
                 <div className="user-comments">
-                  {!Array.isArray(comments) && comments
-                  ?comments
+                  {Array.isArray(comments) && comments.length <= 0
+                  ?'be the first to comment!'
                   :comments.map((comment)=>(
-                    <AnimeComments {...comment}/>
+                    <AnimeComments key={comment._id} comment={comment}/>
                   ))}
                 </div>
               </div>

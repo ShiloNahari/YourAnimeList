@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { fetchAnimeList } from "../../Services/animeFetchService"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+
+import './TableList.css'
 
 export default function TableList () {
   const {userId} = useParams()
@@ -11,15 +13,15 @@ export default function TableList () {
       setUserAnime(anime)
     }
     fetchAnimes()
-
-},[userId])
+  },[userId])
+  
   return (
     <>
       {Array.isArray(userAnime) && userAnime.length >0
       ?
-        <table className='TableList '>
+        <table className='TableList page'>
           <thead>
-            <tr>
+            <tr key={1}>
               <th>image</th>
               <th>Name</th>
               <th>episodes seen</th>
@@ -29,17 +31,18 @@ export default function TableList () {
           <tbody>
             {userAnime.map(anime => (
               
-              <tr>
-                <td><img src={anime.thumb} alt="" srcset="" /></td>
-                <td>{anime.title}</td>
-                <td>{anime.episodesSeen}</td>
-                <td>{anime.rating}/10</td>
+              <tr key={anime._id} style={{'height':'50px'}}>
+                <td style={{'height':'50px'}}><Link to={`/anime/${anime.animeId}`}><img src={anime.thumb} alt="" srcSet="" /></Link></td>
+                <td style={{'height':'50px'}}><Link to={`/anime/${anime.animeId}`}>{anime.title}</Link></td>
+                <td style={{'height':'50px'}}>{anime.episodesSeen}</td>
+                <td style={{'height':'50px'}}>{anime.rating}/10</td>
               </tr>
             ))} 
           
           </tbody>
       </table>
-          :'hi'}
+          :<div className="page">no animes in your list! <Link to={'/'} className="link">go home to add some</Link></div>
+          }
         
     </>
   )

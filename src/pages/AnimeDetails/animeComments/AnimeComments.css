@@ -11,11 +11,13 @@
 }
 
 .user-name{
+  display: flex;
   padding: 10px;
   font-weight: 700;
 }
 
 .user-name .faded{
+  left: 0;
   color: #a0a0a0;
 }
 

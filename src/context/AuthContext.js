@@ -31,7 +31,6 @@ export const AuthContextProvider = ({ children }) => {
       } else {
         dispatch({type:"LOGOUT", payload:null})
       }
-      console.log(await jwtDecode(tokenCookie));
       } catch (error) {
         console.log(error);
       }

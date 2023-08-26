@@ -1,0 +1,27 @@
+tr:nth-child(2n){
+  background-color: aqua;
+}
+
+thead {
+  height: 50px;
+  color: burlywood;
+  text-shadow: 2px 2px black 2px;
+  background-color: rgb(36, 36, 237);
+}
+
+table{
+  margin: auto;
+}
+
+tr {
+  height: 80px;
+}
+
+th {
+  height: 50px;
+  min-width: 50px
+}
+
+td{
+  height: 70px;
+}
