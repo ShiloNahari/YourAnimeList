@@ -11,8 +11,6 @@ export default function Layout() {
   const [results, setResults] = useState(null)
   const links = [
     { to: "/", innerHTML: "Home" },
-    { to: "/blogs", innerHTML: "Blogs" },
-    { to: "/contacts", innerHTML: "Contact" },
   ]
 
   const handleSearch = async(e) =>{
